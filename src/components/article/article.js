@@ -87,9 +87,16 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  }, 
+  {
+    title: "I Dream in For Loops",
+    date: 'Dec 14th, 2022',
+    firstParagraph: "Nobody likes doing for loops anymore. I don't know why.",
+    secondParagraph: "I don't have much of a creative mind.",
+    thirdParagraph: "So this is all I'm using for a paragraph."
   }
 ];
-
+export {data};
 /*
   Step 1: Write a component called 'articleMaker' to create an article.
   Your component is a function that takes an article object as its only argument,
@@ -100,10 +107,44 @@ const data = [
     <p class="date">{date of the article}</p>
 
     {three separate paragraph elements}
-
+    
     <span class="expandButton">+</span>
-  </div>
-
+    </div>
+    */
+    function articleMaker(obj) {
+      const a = document.createElement("div");
+      a.classList.add("article");
+      const b = document.createElement("h2");
+      b.textContent = obj.title;
+      a.append(b);
+      const c = document.createElement("p");
+      c.classList.add("date");
+      c.textContent = obj.date;
+      a.append(c);
+      const x = document.createElement("p");
+      x.textContent = obj.firstParagraph;
+      const y = document.createElement("p");
+      y.textContent = obj.secondParagraph;
+      const z = document.createElement("p");
+      z.textContent = obj.thirdParagraph;
+      a.append(x);
+      a.append(y);
+      a.append(z);
+      const d = document.createElement("span");
+      d.classList.add("expandButton");
+      d.textContent = "+";
+      a.append(d);
+      const arts = Array.from(document.querySelectorAll(".article"));
+      const btns = Array.from(document.querySelectorAll(".expandButton"));
+      btns.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const h = btns.indexOf(e.target);
+          arts[h].classList.toggle("article-open");
+        })
+      })
+      return a;
+    }
+    /*
   Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
   This listener should toggle the class 'article-open' on div.article.
 
@@ -115,3 +156,8 @@ const data = [
   Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
   Refresh the page to see the new article.
 */
+const articles = document.querySelector(".articles");
+for (let i = 0; i < data.length; i++) {
+
+  articles.append(articleMaker(data[i]));
+};
